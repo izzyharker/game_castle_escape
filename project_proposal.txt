@@ -1,0 +1,5 @@
+Winter ’23 CIS 407/507 Project Proposal – 100/100 points – Due Friday, 1/20, 11:59 PM
+
+I plan to create a 2D action-adventure video game using Unity for this project. I'm working alone so I'll be the one doing all of the different components, and I'm hoping to use this project to figure out more about how video games work and gain experience working with a slightly larger project than the single-file stuff that composes most class assignments. I also think Unity is kinda cool and want to learn more about how to use it.
+
+By the mid-term milestone, I would like to have one game level set up with input from the player working. For the end of the term, I intend to finish that level with enemies and possibly powerups/other upgrades of some sort, as well as a menu screen for the game.
