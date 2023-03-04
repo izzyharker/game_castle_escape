@@ -10,8 +10,8 @@ public class Enemy1 : MonoBehaviour
         transform.position = new Vector3(130, -100, 0);
     }
 
-    public int health = 3;
-    public float speed = 1;
+    public float health = 3;
+    public float speed = 0.5f;
 
     public float xmin = 130;
     public float ymin = -100;
