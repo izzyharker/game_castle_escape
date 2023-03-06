@@ -18,16 +18,23 @@ public class PlayerMovement : MonoBehaviour
 
     public bool immune = false;
 
+    public int num_enemies = 4;
+
+    public GameObject healthbar;
+
     // Start is called before the first frame update
     void Start()
     {
         this.GetComponent<PolygonCollider2D>().enabled=false;
         health = 5;
+
+        transform.position = new Vector2(-335, -610);
     }
 
     void changeSprite(Sprite newsprite) {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = newsprite;
+        anim.SetBool("hasWeapon", true);
     }
 
     void Attack() {
@@ -56,18 +63,26 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void GameOver() {
+        Destroy(this.gameObject);
+        Destroy(healthbar);
+    }
+
+    void YouWin() {
+        return;
+    }
+
     // Update is called once per frame
     void Update()
     {
         int i = 0;
         this.GetComponent<Rigidbody2D>().velocity = new Vector2 (Input.GetAxis("Horizontal")*speed, Input.GetAxis("Vertical")*speed);
-        // if (Input.GetAxis("Fire1"))
         this.GetComponent<Rigidbody2D>().rotation = 0f;
         this.GetComponent<Rigidbody2D>().angularVelocity = 0f;
 
-        if (hasWeapon == 1) {
-            anim.SetBool("hasWeapon", true);
-        }
+        // if (hasWeapon == 1) {
+        //     anim.SetBool("hasWeapon", true);
+        // }
 
         if (Input.GetKeyDown("space")) {
             Debug.Log("pressed space bar");
@@ -81,10 +96,15 @@ public class PlayerMovement : MonoBehaviour
         }  
 
         if (health == 0) {
-            Destroy(this.gameObject);
+            GameOver();
+        }
+
+        if (num_enemies == 0) {
+            YouWin();
         }
 
         Flip();
+
         if (i % 10 == 0) {
             immune = false;
         }
@@ -96,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
         this.GetComponent<Rigidbody2D>().angularVelocity = 0f;
         // Debug.Log("collision detected\n");
 
-        if (coll.gameObject.name == "enemy1") {
+        Sprite s = coll.gameObject.GetComponent<SpriteRenderer>().sprite;
+
+        if (s.name == "enemy1") {
             Hit();
         }
     }

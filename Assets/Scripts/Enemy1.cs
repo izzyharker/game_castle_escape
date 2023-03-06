@@ -4,39 +4,41 @@ using UnityEngine;
 
 public class Enemy1 : MonoBehaviour
 {
+    public float xmin;
+    public float ymin;
+
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new Vector3(130, -100, 0);
+        this.GetComponent<Rigidbody2D>().position = new Vector2(xmin, ymin);
     }
 
     public float health = 3;
-    public float speed = 0.5f;
+    public float speed = 30;
 
-    public float xmin = 130;
-    public float ymin = -100;
-    public float radius = 60;
-    public Vector3 move_direction = new Vector3 (0, 1, 0);
+    public float radius = 120;
+    public Vector3 move_direction = new Vector2 (0, 1);
+
+    public GameObject healthbar;
 
     void Move() {
-        if (transform.position.y > (ymin + radius) && move_direction.y == 1) {
-            move_direction = new Vector3(1, 0, 0);
+        if (this.GetComponent<Rigidbody2D>().position.y >= (ymin + radius) && move_direction.y == 1) {
+            move_direction = new Vector2(1, 0);
         }
-        else if (transform.position.x > (xmin + radius) && move_direction.x == 1) {
-            move_direction = new Vector3(0, -1, 0);
+        else if (this.GetComponent<Rigidbody2D>().position.x >= (xmin + radius) && move_direction.x == 1) {
+            move_direction = new Vector2(0, -1);
         }
-        else if (transform.position.y < ymin && move_direction.y == -1) {
-            move_direction = new Vector3(-1, 0, 0);
+        else if (this.GetComponent<Rigidbody2D>().position.y <= (ymin) && move_direction.y == -1) {
+            move_direction = new Vector2(-1, 0);
         }
-        else if (transform.position.x < xmin && move_direction.x == -1) {
-            move_direction = new Vector3(0, 1, 0);
+        else if (this.GetComponent<Rigidbody2D>().position.x <= (xmin) && move_direction.x == -1) {           
+            move_direction = new Vector2(0, 1);
         }
-        transform.position = transform.position + speed*move_direction;
     }
 
     void Hit() {
         health--;
-        Debug.Log(health.ToString());
+        // Debug.Log(health.ToString());
     }
 
     // Update is called once per frame
@@ -44,15 +46,21 @@ public class Enemy1 : MonoBehaviour
     {
         Move();
 
-        if (health==0) {
-            Destroy(this.gameObject);
-        }
+        this.GetComponent<Rigidbody2D>().velocity = move_direction * speed;
+        this.GetComponent<Rigidbody2D>().rotation = 0f;
+        this.GetComponent<Rigidbody2D>().angularVelocity = 0f;
     }
 
     void OnTriggerEnter2D(Collider2D c) {
         if (c.gameObject.name == "Player") {
             Hit();
-            Debug.Log("hit enemy\n");
+            // Debug.Log("hit enemy\n");
+            if (health==0) {
+                Destroy(this.gameObject);
+                Destroy(healthbar);
+            }
+
+            c.gameObject.GetComponent<PlayerMovement>().num_enemies--;
         }
     }
 }
