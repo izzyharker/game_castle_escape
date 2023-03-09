@@ -58,9 +58,8 @@ public class Enemy1 : MonoBehaviour
             if (health==0) {
                 Destroy(this.gameObject);
                 Destroy(healthbar);
+                c.gameObject.GetComponent<PlayerMovement>().num_enemies--;
             }
-
-            c.gameObject.GetComponent<PlayerMovement>().num_enemies--;
         }
     }
 }

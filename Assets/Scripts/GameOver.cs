@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MainMenu : MonoBehaviour
+public class GameOver : MonoBehaviour
 {
     public void PlayGame() {
         // load next scene
@@ -11,9 +11,8 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Level");
     }
 
-    public void QuitGame() {
+    public void QuitToMenu() {
         // quit game
-        Debug.Log("QUIT");
-        Application.Quit();
+        SceneManager.LoadScene("Menu");
     }
 }

@@ -22,6 +22,9 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject healthbar;
 
+    public GameObject win;
+    public GameObject lose;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +32,8 @@ public class PlayerMovement : MonoBehaviour
         health = 5;
 
         transform.position = new Vector2(-335, -610);
+
+        Time.timeScale = 1;
     }
 
     void changeSprite(Sprite newsprite) {
@@ -64,12 +69,13 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void GameOver() {
-        Destroy(this.gameObject);
-        Destroy(healthbar);
+        lose.SetActive(true);
+        Time.timeScale = 0;
     }
 
     void YouWin() {
-        return;
+        win.SetActive(true);
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -105,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
         Flip();
 
-        if (i % 10 == 0) {
+        if (i % 20 == 0) {
             immune = false;
         }
         i++;
